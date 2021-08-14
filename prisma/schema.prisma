@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model accounts {
+  id                   Int      @id @default(autoincrement())
+  compound_id          String   @unique @db.VarChar(255)
+  user_id              Int
+  provider_type        String   @db.VarChar(255)
+  provider_id          String   @db.VarChar(255)
+  provider_account_id  String   @db.VarChar(255)
+  refresh_token        String?  @db.Text
+  access_token         String?  @db.Text
+  access_token_expires DateTime @default(now()) @db.Timestamp(6)
+  created_at           DateTime @default(now()) @db.Timestamp(6)
+  updated_at           DateTime @default(now()) @db.Timestamp(6)
+
+  @@index([provider_account_id], name: "provider_account_id")
+  @@index([provider_id], name: "provider_id")
+  @@index([user_id], name: "user_id")
+}
+
+model label {
+  title         String          @id @db.VarChar(16)
+  color         String          @db.VarChar(16)
+  labelplaylist labelplaylist[]
+}
+
+model labelplaylist {
+  playlistId Int
+  labelId    String   @db.VarChar(16)
+  label      label    @relation(fields: [labelId], references: [title])
+  playlist   playlist @relation(fields: [playlistId], references: [id])
+
+  @@id([playlistId, labelId])
+  @@index([labelId], name: "labelId")
+}
+
+model playlist {
+  id              Int             @id @default(autoincrement())
+  list            String          @db.VarChar(34)
+  duration        Int?
+  userId          Int
+  lastTimeWatched DateTime?       @db.DateTime(0)
+  createdAt       DateTime?       @default(now()) @db.DateTime(0)
+  title           String          @db.VarChar(100)
+  users           users           @relation(fields: [userId], references: [id])
+  labelplaylist   labelplaylist[]
+  video           video[]
+
+  @@index([userId], name: "userId")
+}
+
+model sessions {
+  id            Int      @id @default(autoincrement())
+  user_id       Int
+  expires       DateTime @default(now()) @db.Timestamp(6)
+  session_token String   @unique @db.VarChar(255)
+  access_token  String   @unique @db.VarChar(255)
+  created_at    DateTime @default(now()) @db.Timestamp(6)
+  updated_at    DateTime @default(now()) @db.Timestamp(6)
+}
+
+model users {
+  id             Int        @id @default(autoincrement())
+  NAME           String?    @db.VarChar(255)
+  email          String?    @unique @db.VarChar(255)
+  email_verified DateTime   @default(now()) @db.Timestamp(6)
+  image          String?    @db.VarChar(255)
+  created_at     DateTime   @default(now()) @db.Timestamp(6)
+  updated_at     DateTime   @default(now()) @db.Timestamp(6)
+  playlist       playlist[]
+}
+
+model verification_requests {
+  id         Int      @id @default(autoincrement())
+  identifier String   @db.VarChar(255)
+  token      String   @unique @db.VarChar(255)
+  expires    DateTime @default(now()) @db.Timestamp(6)
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  updated_at DateTime @default(now()) @db.Timestamp(6)
+}
+
+model video {
+  id          Int      @id @default(autoincrement())
+  v           String   @db.VarChar(11)
+  hasWatched  Boolean
+  timeWatched Int
+  duration    Int
+  playlistId  Int
+  title       String   @db.VarChar(100)
+  description String   @db.VarChar(5000)
+  createdAt   DateTime @db.Date
+  playlist    playlist @relation(fields: [playlistId], references: [id])
+
+  @@index([playlistId], name: "playlistId")
+}

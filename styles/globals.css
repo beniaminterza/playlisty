@@ -1,0 +1,151 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700&display=swap");
+
+@layer components {
+    .res-width {
+        /*responsive width*/
+        @apply w-1600 max-w-1/9 mx-auto;
+    }
+    .btn {
+        @apply border-2 font-semibold py-1 px-6 rounded-st border-gray transition-all;
+    }
+    .btn-white {
+        @apply btn text-white hover:bg-gray;
+    }
+    .btn-gray {
+        @apply btn text-gray border-gray hover:border-white hover:text-white;
+    }
+    .click {
+        @apply cursor-pointer;
+    }
+    .signinBtn {
+        @apply rounded-st text-left pl-18 w-full relative border-2 border-gray hover:bg-bgLight6 hover:border-white transition-all py-3;
+    }
+}
+
+html {
+    scroll-behavior: smooth;
+    font-family: "Mulish", sans-serif;
+}
+
+body {
+    background: #231e23;
+    overflow-y: scroll;
+}
+
+#__next {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+footer {
+    margin-top: auto;
+}
+
+/*didnt work in tailwind, so had to do it manually in css*/
+.screenMinusHeader {
+    height: calc(100vh - 4.25rem);
+}
+
+.libInput:focus-within {
+    border-color: #c4c4c4;
+}
+
+.centerAbsolute {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.centerX {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.centerY {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.blurBg {
+    background: #00000093 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
+
+.loader,
+.loader:after {
+    border-radius: 50%;
+    width: 10em;
+    height: 10em;
+}
+.loader {
+    margin: 5rem auto;
+    font-size: 0.5rem;
+    position: relative;
+    text-indent: -9999em;
+    border: 1em solid #494949;
+    border-left-color: white;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-animation: load8 1.5s infinite linear;
+    animation: load8 1.5s infinite linear;
+}
+
+.loader:hover {
+    border-color: #858585;
+    border-left-color: white;
+}
+
+@-webkit-keyframes load8 {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@keyframes load8 {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+.selectedBefore {
+    height: 1.125rem;
+    width: 0;
+    transition: width 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.selectedAfter {
+    width: 1.125rem;
+    transition: width 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    height: 1.125rem;
+    margin-right: -0.25rem;
+}
+
+.custom-dot-list-style .react-multi-carousel-dot--active button {
+    border-color: white;
+}
+
+.react-multiple-carousel__arrow--right {
+    z-index: 50;
+}
