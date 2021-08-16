@@ -13,10 +13,17 @@ import { PrismaClient } from "@prisma/client";
 import YouTube from "react-youtube";
 import axios from "axios";
 import { MinusSmIcon } from "@heroicons/react/solid";
+import dynamic from "next/dynamic";
+
+const QuillNoSSRWrapper = dynamic(import("react-quill"), {
+    ssr: false,
+    loading: () => <p>Loading ...</p>,
+});
 
 const interval = 30;
 const timeoutTime = 60;
 let updateTimeout;
+let typingTimeout;
 
 function Playlist({
     session,
@@ -46,17 +53,61 @@ function Playlist({
         getVideos[index].timeWatched
     );
 
+    const [notes, setNotes] = useState("");
+    const [typing, setTyping] = useState(false);
+
     useEffect(() => {}, []);
 
     useEffect(() => {
-        console.log(videos[curVideoPos].timeWatched);
         setStartedVideo(false);
+        setNotes(
+            videos[curVideoPos].note === null ? "" : videos[curVideoPos].note
+        );
         setLastStoredTime(videos[curVideoPos].timeWatched);
         clearTimeout(updateTimeout);
+        if (typing) {
+            clearTimeout(typingTimeout);
+            setTyping(false);
+            updateNoteInDatabase();
+        }
     }, [curVideoPos]);
+
+    function writeNoteHandler(value) {
+        setNotes(value);
+
+        if (typing) {
+            clearTimeout(typingTimeout);
+        } else {
+            setTyping(true);
+        }
+
+        typingTimeout = setTimeout(() => {
+            //Is saving the note the after 2 seconds after typing
+            if (typing) {
+                updateNoteInDatabase();
+            }
+            setTyping(false);
+        }, 2000);
+    }
+
+    function updateNoteInDatabase() {
+        axios
+            .put(`/api/video/${videos[curVideoPos].id}/note`, { note: notes })
+            .then((res) => {
+                console.log(res.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
 
     function nextVideo() {
         updateWatchedTime();
+        if (typing) {
+            clearTimeout(typingTimeout);
+            setTyping(false);
+            updateNoteInDatabase();
+        }
         if (curVideoPos < videos.length - 1) {
             setCurVideoPos((pos) => pos + 1);
         }
@@ -271,6 +322,11 @@ function Playlist({
                                 .reduce((prev, next) => prev + next)
                         }
                     />
+                    <QuillNoSSRWrapper
+                        theme="snow"
+                        value={notes}
+                        onChange={writeNoteHandler}
+                    />
 
                     <div className="w-full pb-4 transition-all group py-3 border-2 border-grayDark hover:border-gray rounded-st bg-bgLight3 hover:bg-bgLight3 flex flex-col">
                         <div className="flex px-4 w-full justify-between font-semibold font-white mb-2">
@@ -349,7 +405,7 @@ export async function getServerSideProps(context) {
         });
         const { user_id } = hasSession;
         const getVideos = await prisma.$queryRaw(
-            `SELECT video.v, video.id, video.timeWatched, video.description, video.hasWatched, video.duration, video.title FROM playlist JOIN video ON video.playlistId = playlist.id WHERE playlist.userId = ${user_id} AND playlist.id = ${playlistId}`
+            `SELECT video.v, video.id, video.timeWatched, video.note, video.description, video.hasWatched, video.duration, video.title FROM playlist JOIN video ON video.playlistId = playlist.id WHERE playlist.userId = ${user_id} AND playlist.id = ${playlistId}`
         );
         const getPlaylist = await prisma.$queryRaw(
             `SELECT playlist.title, playlist.duration FROM playlist JOIN video ON video.playlistId = playlist.id WHERE playlist.userId = ${user_id} AND playlist.id = ${playlistId}`

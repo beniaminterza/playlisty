@@ -96,6 +96,7 @@ model video {
   title       String   @db.VarChar(100)
   description String   @db.VarChar(5000)
   createdAt   DateTime @db.Date
+  note        String?  @db.VarChar(2000)
   playlist    playlist @relation(fields: [playlistId], references: [id])
 
   @@index([playlistId], name: "playlistId")

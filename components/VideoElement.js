@@ -23,7 +23,10 @@ function VideoElement({
     useEffect(() => {
         if (curVideoPos === pos) {
             setCurVideo(id);
-            setVideoInfo({ description: description, title: title });
+            setVideoInfo({
+                description: description,
+                title: title,
+            });
         }
     }, [curVideoPos]);
 
