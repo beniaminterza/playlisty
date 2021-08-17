@@ -24,6 +24,7 @@ const interval = 30;
 const timeoutTime = 60;
 let updateTimeout;
 let typingTimeout;
+let changeNoteTimeout;
 
 function Playlist({
     session,
@@ -59,6 +60,9 @@ function Playlist({
     useEffect(() => {}, []);
 
     useEffect(() => {
+        changeNoteTimeout = setTimeout(() => {
+            clearTimeout(typingTimeout);
+        }, 1000);
         setStartedVideo(false);
         setNotes(
             videos[curVideoPos].note === null ? "" : videos[curVideoPos].note
@@ -68,13 +72,14 @@ function Playlist({
         if (typing) {
             clearTimeout(typingTimeout);
             setTyping(false);
-            updateNoteInDatabase();
         }
     }, [curVideoPos]);
 
     function writeNoteHandler(value) {
         setNotes(value);
-
+        let array = [...videos];
+        array[curVideoPos].note = value;
+        setVideos(array);
         if (typing) {
             clearTimeout(typingTimeout);
         } else {
@@ -83,9 +88,8 @@ function Playlist({
 
         typingTimeout = setTimeout(() => {
             //Is saving the note the after 2 seconds after typing
-            if (typing) {
-                updateNoteInDatabase();
-            }
+            console.log("Update in Database");
+            updateNoteInDatabase();
             setTyping(false);
         }, 2000);
     }
