@@ -77,6 +77,20 @@ export default async (req, res) => {
             //get the playlist data here
             const { playlistId } = req.body;
             const { user_id } = hasSession;
+
+            const findPlaylist = await prisma.playlist.findMany({
+                where: {
+                    list: playlistId,
+                    userId: user_id,
+                },
+            });
+            if (findPlaylist.length > 0) {
+                res.status(500).json({
+                    message: "This Playlist exists already",
+                });
+                return;
+            }
+
             const apiData = await callApis(playlistId);
 
             const createPlaylist = await prisma.playlist.create({
