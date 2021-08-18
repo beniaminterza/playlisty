@@ -93,5 +93,34 @@ export default async (req, res) => {
             res.status(500).json({ message: "Database Error" });
             return;
         }
+    } else if (req.method === "DELETE") {
+        const session = await getSession({ req });
+        const { id } = req.query;
+        try {
+            const hasSession = await prisma.sessions.findUnique({
+                where: {
+                    access_token: session.accessToken,
+                },
+            });
+            if (hasSession.length === 0) {
+                res.status(401).json({
+                    message: "You are not allowed to use this method!",
+                });
+                //error
+            } else {
+                const deletePlaylist = await prisma.$queryRaw(
+                    `DELETE FROM playlist WHERE playlist.id = ${id}`
+                );
+                console.log(deletePlaylist);
+                res.status(200).json({
+                    message: "Ok",
+                });
+                return;
+            }
+        } catch (e) {
+            console.error(e);
+            res.status(500).json({ message: "Database Error" });
+            return;
+        }
     }
 };

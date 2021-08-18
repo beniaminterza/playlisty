@@ -21,7 +21,7 @@ function Label({
 }) {
     return (
         <div
-            className={`rounded-full transition-all flex items-center ${
+            className={`rounded-full w-max transition-all flex items-center ${
                 click !== false && "click"
             } text-sm border-2 border-transparent ${
                 select && `border-${color}`
@@ -97,7 +97,7 @@ function Label({
                     : null
             }
         >
-            {title}
+            <p className="w-max">{title}</p>
             {remove && <XIcon className="h-4 -mr-1 ml-2 click" />}
             {add && <PlusIcon className="h-5 -mr-1.5 ml-2 click" />}
             {filter && (

@@ -1,4 +1,8 @@
-import { BookmarkIcon, CheckIcon } from "@heroicons/react/outline";
+import {
+    BookmarkIcon,
+    CheckIcon,
+    FolderRemoveIcon,
+} from "@heroicons/react/outline";
 import { useState, useEffect } from "react";
 import HorizontalLine from "../../components/HorizontalLine";
 import Label from "../../components/Label";
@@ -14,6 +18,7 @@ import YouTube from "react-youtube";
 import axios from "axios";
 import { MinusSmIcon } from "@heroicons/react/solid";
 import dynamic from "next/dynamic";
+import Delete from "../../components/Delete";
 
 const QuillNoSSRWrapper = dynamic(import("react-quill"), {
     ssr: false,
@@ -37,6 +42,7 @@ function Playlist({
 }) {
     const [showAddLabel, setShowAddLabel] = useState(false);
     const [showNewLabel, setShowNewLabel] = useState(false);
+    const [showDelete, setShowDelete] = useState(false);
 
     const [videos, setVideos] = useState(getVideos);
     const [curVideo, setCurVideo] = useState("");
@@ -231,9 +237,9 @@ function Playlist({
                         </div>
 
                         {/*action under the video*/}
-                        <div className="flex my-4 justify-between">
+                        <div className="flex my-4 justify-between gap-8">
                             {/*left side */}
-                            <div className="flex gap-8 ">
+                            <div className="flex gap-8 flex-shrink-0">
                                 <div
                                     onClick={updateWatchedValue}
                                     className="flex gap-2 items-center relative click text-grayLight hover:text-white"
@@ -249,9 +255,16 @@ function Playlist({
                                         as watched
                                     </p>
                                 </div>
+                                <div
+                                    onClick={() => setShowDelete(true)}
+                                    className="flex gap-2 items-center relative click text-grayLight hover:text-white"
+                                >
+                                    <FolderRemoveIcon className="h-5" />
+                                    <p className="inline">Delete Playlist</p>
+                                </div>
                             </div>
                             {/*right side = Labels*/}
-                            <div className="flex gap-4 ">
+                            <div className="flex gap-4 overflow-hidden transition-all">
                                 <Label
                                     title="Add Label"
                                     addLabel={true}
@@ -388,6 +401,9 @@ function Playlist({
                             playlistId={playlistId}
                         />
                     )
+                )}
+                {showDelete && (
+                    <Delete setShowDelete={setShowDelete} id={playlistId} />
                 )}
             </main>
         </Layout>

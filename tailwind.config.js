@@ -109,6 +109,8 @@ module.exports = {
             zIndex: ["group-hover"],
             padding: ["hover"],
             fontWeight: ["hover"],
+            flexWrap: ["hover"],
+            overflow: ["hover"],
         },
     },
     plugins: [],
