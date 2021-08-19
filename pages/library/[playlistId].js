@@ -213,7 +213,7 @@ function Playlist({
 
     return (
         <Layout session={session} title={info?.title}>
-            <main className="text-white res-width grid grid-cols-10">
+            <main className="text-white res-width grid grid-cols-10 flex-grow">
                 <div className="flex col-span-7">
                     {/* Left side = video + description*/}
                     <div className="py-8 w-full">

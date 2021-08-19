@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import { Fragment } from "react";
 import Footer from "./Footer";
@@ -7,9 +7,15 @@ import Upload from "./Upload";
 import { useRouter } from "next/router";
 import FadeIn from "./FadeIn";
 
-const Layout = ({ children, session, title }) => {
+const Layout = ({ children, session, title, state }) => {
     const [showUpload, setShowUpload] = useState(false);
     const router = useRouter();
+
+    useEffect(() => {
+        if (state > 0) {
+            setShowUpload(true);
+        }
+    }, [state]);
 
     return (
         <Fragment>
@@ -17,7 +23,7 @@ const Layout = ({ children, session, title }) => {
                 <title>{`${title ? title : "Playlisty"}`}</title>
                 <meta
                     name="description"
-                    content="Watch YouTube playlists with no distraction"
+                    content="Watch YouTube playlists in a better way"
                 />
                 <link rel="icon" href="/favicon_black.svg" />
             </Head>

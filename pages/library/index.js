@@ -18,6 +18,7 @@ function index({ session, data, labels }) {
     const [page, setPage] = useState(0);
     const [loadMorePlaylists, setLoadMorePlaylists] = useState([]);
     const [lastPage, setLastPage] = useState(false);
+    const [showUpload, setShowUpload] = useState(0);
 
     useEffect(() => {
         if (selectedLabels.length > 0) {
@@ -77,7 +78,11 @@ function index({ session, data, labels }) {
     }
 
     return (
-        <Layout title="Library - Playlisty" session={session}>
+        <Layout
+            title="Library - Playlisty"
+            session={session}
+            state={showUpload}
+        >
             <main className="res-width pt-4 mb-8">
                 {/*Bar on the top*/}
                 <div className="flex gap-4">
@@ -161,6 +166,22 @@ function index({ session, data, labels }) {
                             </Fragment>
                         )}
                     </Fragment>
+                )}
+                {data.all.length === 0 && (
+                    <div className="w-full flex justify-center flex-col items-center gap-8">
+                        <div className="text-white text-xl mt-12">
+                            Your Library is empty
+                        </div>
+                        <p className="text-gray -mt-4">
+                            Upload your first playlist now
+                        </p>
+                        <button
+                            onClick={() => setShowUpload((prev) => prev + 1)}
+                            className="rounded-full click px-8 py-2 font-semibold border-2 border-primary text-primary hover:bg-bgLight3 transition-all"
+                        >
+                            Upload
+                        </button>
+                    </div>
                 )}
             </main>
         </Layout>
