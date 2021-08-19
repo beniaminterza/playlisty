@@ -7,16 +7,11 @@ function UploadLink({ input, setInput, upload, cancel }) {
         <div className="bg-bgLight5 z-1000 border-2 fixed centerAbsolute border-st border-grayDark rounded-st">
             <div className="p-8 w-40">
                 <h5 className="text-white font-semibold text-2xl">Upload</h5>
-                <DragLink />
 
-                <div className="flex my-4 items-center gap-2 text-grayDark">
-                    <HorizontalLine />
-                    <p>or</p>
-                    <HorizontalLine />
-                </div>
-
-                <p className="text-white">Paste the playlist link</p>
-                <div className="flex libInput text-gray items-center px-4 gap-4 mt-4 border-2 border-gray rounded-st py-2">
+                <p className="text-white mt-28 pt-3">
+                    Paste the playlist link here
+                </p>
+                <div className="flex libInput mb-28 text-gray items-center px-4 gap-4 mt-4 border-2 border-gray rounded-full py-2">
                     <ClipboardIcon className="h-4" />
                     <input
                         type="text"
@@ -33,7 +28,7 @@ function UploadLink({ input, setInput, upload, cancel }) {
             <div className="p-8 flex gap-4">
                 <button
                     onClick={cancel}
-                    className="btn border-gray text-gray hover:border-grayLight hover:text-grayLight"
+                    className="rounded-full click px-6 py-1.5 font-semibold border-2 border-gray text-gray hover:border-grayLight hover:bg-bgLight3 transition-all"
                 >
                     Cancel
                 </button>
@@ -41,7 +36,7 @@ function UploadLink({ input, setInput, upload, cancel }) {
                     onClick={() => {
                         upload();
                     }}
-                    className="btn border-blue1 text-blue1 hover:bg-blue1Dark"
+                    className="rounded-full click px-6 py-1.5 font-semibold border-2 border-blue1 text-blue1 hover:bg-bgLight4 transition-all"
                 >
                     Upload
                 </button>

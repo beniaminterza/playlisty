@@ -21,7 +21,7 @@ function UploadError({ cancel, setShowUploadError, setShowUploadLink }) {
             <div className="p-8 flex gap-4">
                 <button
                     onClick={cancel}
-                    className="btn border-gray text-gray hover:border-grayLight hover:text-grayLight"
+                    className="rounded-full click px-6 py-1.5 font-semibold border-2 border-gray text-gray hover:border-grayLight hover:bg-bgLight3 transition-all"
                 >
                     Cancel
                 </button>
@@ -30,7 +30,7 @@ function UploadError({ cancel, setShowUploadError, setShowUploadLink }) {
                         setShowUploadError(false);
                         setShowUploadLink(true);
                     }}
-                    className="btn border-primary text-primary hover:border-primaryLight hover:text-primaryLight"
+                    className="rounded-full click px-6 py-1.5 font-semibold border-2 border-primary text-primary hover:bg-bgLight4 transition-all"
                 >
                     Retry
                 </button>

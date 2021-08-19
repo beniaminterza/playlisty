@@ -24,12 +24,12 @@ function UploadSuccess({ cancel, id }) {
             <div className="p-8 flex gap-4">
                 <button
                     onClick={cancel}
-                    className="btn text-blue1 border-blue1 hover:bg-blue1Dark"
+                    className="rounded-full click px-6 py-1.5 font-semibold border-2 border-blue1 text-blue1 hover:bg-bgLight4 transition-all"
                 >
                     Done
                 </button>
                 <Link href={`library/${id}`}>
-                    <button className="btn text-turqoise border-turqoise hover:bg-turqoiseDark ">
+                    <button className="rounded-full click px-6 py-1.5 font-semibold border-2 border-turqoise text-turqoise hover:bg-bgLight4 transition-all">
                         Go to playlist
                     </button>
                 </Link>
