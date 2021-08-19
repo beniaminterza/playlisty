@@ -3,7 +3,7 @@ import {
     CheckIcon,
     FolderRemoveIcon,
 } from "@heroicons/react/outline";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import HorizontalLine from "../../components/HorizontalLine";
 import Label from "../../components/Label";
 import ProgressBar from "../../components/ProgressBar";
@@ -63,9 +63,15 @@ function Playlist({
     const [notes, setNotes] = useState("");
     const [typing, setTyping] = useState(false);
 
-    useEffect(() => {}, []);
+    const itemsRef = useRef([]);
 
     useEffect(() => {
+        itemsRef.current = itemsRef.current.slice(0, getVideos.length);
+    }, []);
+
+    useEffect(() => {
+        itemsRef.current[curVideoPos]?.scrollIntoView();
+
         changeNoteTimeout = setTimeout(() => {
             clearTimeout(typingTimeout);
         }, 1000);
@@ -323,7 +329,10 @@ function Playlist({
                 </div>
 
                 {/*Right side */}
-                <div className="p-8 pr-0 flex flex-col gap-4 col-span-3">
+                <div
+                    className="sticky top-16 p-8 pr-0 flex flex-col gap-4 col-span-3"
+                    style={{ height: "93vh" }}
+                >
                     <h6 className="font-semibold text-2xl">{info?.title}</h6>
                     <ProgressBar
                         progress={
@@ -345,8 +354,8 @@ function Playlist({
                         onChange={writeNoteHandler}
                     />
 
-                    <div className="w-full pb-4 transition-all group py-3 border-2 border-grayDark hover:border-gray rounded-st bg-bgLight3 hover:bg-bgLight3 flex flex-col">
-                        <div className="flex px-4 w-full justify-between font-semibold font-white mb-2">
+                    <div className="w-full overflow-y-auto pb-4 transition-all group border-2 border-grayDark hover:border-gray rounded-st bg-bgLight3 hover:bg-bgLight3 flex flex-col">
+                        <div className="flex px-4 py-3 w-full justify-between font-semibold font-white mb-2">
                             <p>All Videos</p>
                             {info && (
                                 <p>
@@ -360,24 +369,26 @@ function Playlist({
                                 </p>
                             )}
                         </div>
-
-                        {videos?.map((element, index) => {
-                            return (
-                                <VideoElement
-                                    watched={element.hasWatched}
-                                    title={element.title}
-                                    length={element.duration}
-                                    description={element.description}
-                                    id={element.v}
-                                    setCurVideo={setCurVideo}
-                                    setVideoInfo={setVideoInfo}
-                                    curVideoPos={curVideoPos}
-                                    setCurVideoPos={setCurVideoPos}
-                                    pos={index}
-                                    key={element.id}
-                                />
-                            );
-                        })}
+                        <div className="overflow-y-auto smooth">
+                            {videos?.map((element, index) => {
+                                return (
+                                    <VideoElement
+                                        watched={element.hasWatched}
+                                        title={element.title}
+                                        length={element.duration}
+                                        description={element.description}
+                                        id={element.v}
+                                        setCurVideo={setCurVideo}
+                                        setVideoInfo={setVideoInfo}
+                                        curVideoPos={curVideoPos}
+                                        setCurVideoPos={setCurVideoPos}
+                                        pos={index}
+                                        key={element.id}
+                                        refProp={itemsRef}
+                                    />
+                                );
+                            })}
+                        </div>
                     </div>
                 </div>
 

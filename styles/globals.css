@@ -62,6 +62,10 @@ footer {
     border-color: #c4c4c4;
 }
 
+.smooth {
+    scroll-behavior: smooth;
+}
+
 .centerAbsolute {
     top: 50%;
     left: 50%;

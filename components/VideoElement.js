@@ -16,6 +16,7 @@ function VideoElement({
     setCurVideoPos,
     curVideoPos,
     pos,
+    refProp,
 }) {
     function onClickHandler() {
         setCurVideoPos(pos);
@@ -40,6 +41,7 @@ function VideoElement({
                     : "text-white"
             }`}
             onClick={onClickHandler}
+            ref={(el) => (refProp.current[pos] = el)}
         >
             {pos === curVideoPos ? (
                 <div className="h-7 flex-shrink-0 rounded-full flex w-7 items-center justify-center bg-blue1Dark">
