@@ -40,6 +40,7 @@ function VerticalVideo({
                                 src="/play_white.svg"
                                 layout="fill"
                                 objectFit="contain"
+                                className="transition-all"
                             />
                         </div>
                     </div>

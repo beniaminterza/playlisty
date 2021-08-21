@@ -70,7 +70,9 @@ function Playlist({
     }, []);
 
     useEffect(() => {
-        itemsRef.current[curVideoPos]?.scrollIntoView();
+        itemsRef.current[curVideoPos]?.scrollIntoView({
+            block: "end",
+        });
 
         changeNoteTimeout = setTimeout(() => {
             clearTimeout(typingTimeout);

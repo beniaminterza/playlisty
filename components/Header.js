@@ -4,7 +4,7 @@ import Link from "next/link";
 import User from "./User";
 import { Fragment } from "react";
 
-function Header({ setShowUpload, session }) {
+function Header({ setShowUpload, session, opacity }) {
     const [navbar, setNavbar] = useState(false);
 
     const addShadow = () => {
@@ -19,9 +19,14 @@ function Header({ setShowUpload, session }) {
 
     return (
         <header
-            className={`border-b-2 border-grayDark sticky bg-bgHeader ${
+            className={`border-b-2 border-grayDark sticky ${
                 navbar && "shadow-header"
             } transition-shadow duration-200`}
+            style={{
+                backgroundColor: `rgba(35, 30, 35, ${
+                    opacity === undefined ? "0.97" : opacity
+                })`,
+            }}
         >
             <nav className="res-width flex py-4 items-center gap-16">
                 {/*Logo on the left side*/}

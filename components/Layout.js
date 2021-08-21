@@ -7,7 +7,7 @@ import Upload from "./Upload";
 import { useRouter } from "next/router";
 import FadeIn from "./FadeIn";
 
-const Layout = ({ children, session, title, state }) => {
+const Layout = ({ children, session, title, state, opacity }) => {
     const [showUpload, setShowUpload] = useState(false);
     const router = useRouter();
 
@@ -28,7 +28,11 @@ const Layout = ({ children, session, title, state }) => {
                 <link rel="icon" href="/favicon_black.svg" />
             </Head>
 
-            <Header setShowUpload={setShowUpload} session={session} />
+            <Header
+                setShowUpload={setShowUpload}
+                session={session}
+                opacity={opacity}
+            />
             {children}
             {showUpload && <Upload setShowUpload={setShowUpload} />}
 
