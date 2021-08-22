@@ -71,7 +71,9 @@ function Playlist({
 
     useEffect(() => {
         itemsRef.current[curVideoPos]?.scrollIntoView({
-            block: "end",
+            behavior: "smooth",
+            block: "nearest",
+            inline: "start",
         });
 
         changeNoteTimeout = setTimeout(() => {
@@ -221,8 +223,8 @@ function Playlist({
 
     return (
         <Layout session={session} title={info?.title}>
-            <main className="text-white res-width grid grid-cols-10 flex-grow">
-                <div className="flex col-span-7">
+            <main className="text-white res-width grid grid-cols-10 flex-grow gap-x-8">
+                <div className="flex col-span-10 lg:col-span-6 2xl:col-span-7">
                     {/* Left side = video + description*/}
                     <div className="py-8 w-full">
                         {/*Youtube video*/}
@@ -245,7 +247,7 @@ function Playlist({
                         </div>
 
                         {/*action under the video*/}
-                        <div className="flex my-4 justify-between gap-8">
+                        <div className="flex my-4 gap-4 justify-between flex-col lg:flex-row lg:gap-8">
                             {/*left side */}
                             <div className="flex gap-8 flex-shrink-0">
                                 <div
@@ -293,7 +295,7 @@ function Playlist({
 
                         {/*Infos about the video */}
                         <div className="mt-4 w-full">
-                            <div className="flex justify-between items-center mb-4">
+                            <div className="flex lg:justify-between gap-4 flex-col lg:flex-row lg:items-center mb-4">
                                 {videoInfo.title && (
                                     <p className="text-lg font-semibold">
                                         {videoInfo.title}
@@ -304,7 +306,7 @@ function Playlist({
                                         onClick={() => {
                                             nextVideo();
                                         }}
-                                        className="btn rounded-full py-1.5 border-primary text-primary hover:bg-bgLight3"
+                                        className="btn whitespace-nowrap rounded-full py-1.5 border-primary text-primary hover:bg-bgLight3"
                                     >
                                         Next Video
                                     </button>
@@ -327,14 +329,15 @@ function Playlist({
                     </div>
 
                     {/*Vertical Line to divide the left and right side*/}
-                    <div className="h-full pl-8 border-r-2 border-grayDark"></div>
+                    <div className="hidden lg:block h-full pl-8 border-r-2 border-grayDark"></div>
                 </div>
 
                 {/*Right side */}
                 <div
-                    className="sticky top-16 p-8 pr-0 flex flex-col gap-4 col-span-3"
+                    className="sticky -mt-8 lg:mt-0 top-16 p-8 px-0 pb-8 flex flex-col gap-4 col-span-10 lg:col-span-4 2xl:col-span-3"
                     style={{ height: "93vh" }}
                 >
+                    <HorizontalLine className="lg:hidden" />
                     <h6 className="font-semibold text-2xl">{info?.title}</h6>
                     <ProgressBar
                         progress={

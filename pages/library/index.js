@@ -90,7 +90,7 @@ function index({ session, data, labels }) {
                 </div>
 
                 {/*Labels come here*/}
-                <div className="my-4 flex gap-4 items-center">
+                <div className="my-4 flex gap-4 items-center flex-wrap">
                     {labels.map((element, index) => {
                         return (
                             <Label

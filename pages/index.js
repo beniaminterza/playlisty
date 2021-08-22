@@ -25,7 +25,7 @@ export default function Home() {
                             layout="fill"
                             objectFit="cover"
                             objectPosition="center"
-                            className="z-10 h-96 -m-10"
+                            className="z-10 filter blur"
                             blurDataURL="/homepage_img.jpg"
                             placeholder="blur"
                         />
