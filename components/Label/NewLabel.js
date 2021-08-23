@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Fragment } from "react";
-import HorizontalLine from "./HorizontalLine";
+import HorizontalLine from "../HorizontalLine";
 import ColorSelect from "./ColorSelect";
 import { ArrowLeftIcon } from "@heroicons/react/outline";
 

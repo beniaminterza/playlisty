@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import HorizontalLine from "./HorizontalLine";
+import HorizontalLine from "../HorizontalLine";
 import Label from "./Label";
 import NewLabelButton from "./NewLabelButton";
 

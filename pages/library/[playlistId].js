@@ -1,15 +1,11 @@
-import {
-    BookmarkIcon,
-    CheckIcon,
-    FolderRemoveIcon,
-} from "@heroicons/react/outline";
+import { BookmarkIcon, FolderRemoveIcon } from "@heroicons/react/outline";
 import { useState, useEffect, useRef } from "react";
 import HorizontalLine from "../../components/HorizontalLine";
-import Label from "../../components/Label";
+import Label from "../../components/Label/Label";
 import ProgressBar from "../../components/ProgressBar";
-import VideoElement from "../../components/VideoElement";
-import AddLabel from "../../components/AddLabel";
-import NewLabel from "../../components/NewLabel";
+import VideoElement from "../../components/Video/VideoElement";
+import AddLabel from "../../components/Label/AddLabel";
+import NewLabel from "../../components/Label/NewLabel";
 import { getSession } from "next-auth/client";
 import Layout from "../../components/Layout";
 import moment from "moment";
@@ -18,7 +14,7 @@ import YouTube from "react-youtube";
 import axios from "axios";
 import { MinusSmIcon } from "@heroicons/react/solid";
 import dynamic from "next/dynamic";
-import Delete from "../../components/Delete";
+import Delete from "../../components/Delete/index";
 
 const QuillNoSSRWrapper = dynamic(import("react-quill"), {
     ssr: false,

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Head from "next/head";
-import FadeIn from "../../components/FadeIn";
+import FadeIn from "../../components/FadeIn/FadeIn";
 import { providers, signIn, getSession } from "next-auth/client";
 
 function index({ providers }) {

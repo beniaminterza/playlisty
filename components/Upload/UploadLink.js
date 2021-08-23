@@ -1,6 +1,4 @@
 import { ClipboardIcon } from "@heroicons/react/outline";
-import HorizontalLine from "./HorizontalLine";
-import DragLink from "./DragLink";
 
 function UploadLink({ input, setInput, upload, cancel }) {
     return (

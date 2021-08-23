@@ -3,9 +3,8 @@ import Head from "next/head";
 import { Fragment } from "react";
 import Footer from "./Footer";
 import Header from "./Header";
-import Upload from "./Upload";
+import Upload from "../Upload/index";
 import { useRouter } from "next/router";
-import FadeIn from "./FadeIn";
 
 const Layout = ({ children, session, title, state, opacity }) => {
     const [showUpload, setShowUpload] = useState(false);

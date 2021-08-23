@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import HorizontalLine from "../components/HorizontalLine";
-import FadeInWhenVisible from "../components/FadeInWhenVisible";
-import FadeIn from "../components/FadeIn";
+import FadeInWhenVisible from "../components/FadeIn/FadeInWhenVisible";
+import FadeIn from "../components/FadeIn/FadeIn";
 import { useRef } from "react";
 import { ArrowCircleUpIcon } from "@heroicons/react/outline";
 import { getSession } from "next-auth/client";

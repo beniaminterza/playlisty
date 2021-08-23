@@ -1,11 +1,10 @@
 import { Fragment } from "react";
-import HorizontalLine from "./HorizontalLine";
+import HorizontalLine from "../HorizontalLine";
 import VerticalVideo from "./VerticalVideo";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { ArrowRightIcon } from "@heroicons/react/outline";
-import CustomRightArrow from "./CustomRightArrow";
-import CustomLeftArrow from "./CustomLeftArrow";
+import CustomRightArrow from "../CustomArrow/CustomRightArrow";
+import CustomLeftArrow from "../CustomArrow/CustomLeftArrow";
 const responsive = {
     xl2: {
         breakpoint: { max: 4000, min: 1536 },

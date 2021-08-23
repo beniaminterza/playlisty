@@ -1,5 +1,3 @@
-import { CheckCircleIcon } from "@heroicons/react/outline";
-import HorizontalLine from "./HorizontalLine";
 import Link from "next/link";
 
 function UploadSuccess({ cancel, id }) {

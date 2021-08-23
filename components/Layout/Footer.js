@@ -19,12 +19,6 @@ function Footer() {
                 {/*Right side of footer*/}
                 <div className="flex text-sm text-grayLight gap-10 items-center">
                     <a
-                        className="click hover:text-white"
-                        href="mailto:sattwikraj@playlisty.org"
-                    >
-                        sattwikraj@playlisty.org
-                    </a>
-                    <a
                         href="https://github.com/beniaminterza/playlisty/pulls"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -39,19 +33,6 @@ function Footer() {
                         className="hover:text-white click"
                     >
                         Report a Bug
-                    </a>
-                    <a
-                        href="https://www.instagram.com/playlisty_org/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:text-white flex items-center"
-                    >
-                        <Image
-                            src="/instagram_icon_white.svg"
-                            height="20"
-                            width="20"
-                            className="click"
-                        />
                     </a>
                 </div>
             </nav>

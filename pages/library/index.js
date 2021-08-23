@@ -1,9 +1,9 @@
 import { useState, useEffect, Fragment } from "react";
 import SearchBar from "../../components/SearchBar";
-import Label from "../../components/Label";
-import Layout from "../../components/Layout";
+import Label from "../../components/Label/Label";
+import Layout from "../../components/Layout/index";
 import { getSession } from "next-auth/client";
-import VideoSection from "../../components/VideoSection";
+import VideoSection from "../../components/Video/VideoSection";
 import { PrismaClient } from "@prisma/client";
 import axios from "axios";
 const contentPerPage = 12;

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import User from "./User";
+import User from "../User";
 import { Fragment } from "react";
 
 function Header({ setShowUpload, session, opacity }) {

@@ -1,5 +1,3 @@
-import HorizontalLine from "./HorizontalLine";
-
 function UploadLoading({ cancel }) {
     return (
         <div className="bg-bgLight5 z-1000 border-2 fixed centerAbsolute border-st border-grayDark rounded-st">
