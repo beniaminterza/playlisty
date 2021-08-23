@@ -90,15 +90,15 @@ footer {
 .loader,
 .loader:after {
     border-radius: 50%;
-    width: 10em;
-    height: 10em;
+    width: 5em;
+    height: 5em;
 }
 .loader {
-    margin: 5rem auto;
+    margin: 2rem auto;
     font-size: 0.5rem;
     position: relative;
     text-indent: -9999em;
-    border: 1em solid #494949;
+    border: 0.7em solid #494949;
     border-left-color: white;
     -webkit-transform: translateZ(0);
     -ms-transform: translateZ(0);

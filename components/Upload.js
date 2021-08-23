@@ -49,7 +49,7 @@ function Upload({ setShowUpload }) {
         <Fragment>
             {/*Blur and darken background*/}
             <div
-                className="fixed w-full z-1000 h-full left-0 top-0 bg-black opacity-50 blurBg"
+                className="fixed w-full z-1000 h-full left-0 top-0 bg-black opacity-70"
                 onClick={cancel}
             ></div>
 
