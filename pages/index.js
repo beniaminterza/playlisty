@@ -298,10 +298,10 @@ export default function Home() {
                                     Track your progress
                                 </h6>
                                 <p className="text-gray">
-                                    Since YouTube isn't tracking the progress
-                                    for your playlists , we do it for you, so
-                                    don't worry. You will be able to see your
-                                    progress in percentage.
+                                    Since YouTube isnt tracking the progress for
+                                    your playlists, we do it for you, so dont
+                                    worry. You will be able to see your progress
+                                    in percentage.
                                 </p>
                             </FadeInWhenVisible>
                         </div>

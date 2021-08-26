@@ -8,7 +8,7 @@ import { PrismaClient } from "@prisma/client";
 import axios from "axios";
 const contentPerPage = 12;
 
-function index({ session, data, labels }) {
+function Index({ session, data, labels }) {
     const [selectedLabels, setSelectedLabels] = useState([]);
     const [labelPlaylists, setLabelPlaylists] = useState([]);
     const [searchPlaylists, setSearchPlalyist] = useState([]);
@@ -188,7 +188,7 @@ function index({ session, data, labels }) {
     );
 }
 
-export default index;
+export default Index;
 
 export async function getServerSideProps(context) {
     const session = await getSession(context);
