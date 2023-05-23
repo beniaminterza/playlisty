@@ -75,7 +75,7 @@ function index({ providers }) {
                         </button>
     </FadeIn>*/}
                     {/*Google signin */}
-                    <FadeIn yOffset={25}>
+                    {/*<FadeIn yOffset={25}>
                         <button
                             className="signinBtn"
                             onClick={() => signIn(providers.facebook.id)}
@@ -91,8 +91,8 @@ function index({ providers }) {
                                     width="20"
                                 />
                             </div>
-                        </button>
-                    </FadeIn>
+                        </button>/
+</FadeIn>*/}
                 </div>
             </div>
         </div>
