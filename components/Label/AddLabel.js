@@ -12,15 +12,10 @@ function AddLabel({
     setAllLabels,
     playlistId,
 }) {
-    function removeLabel(e) {
-        let title = e.target.textContent;
-        console.log(title);
-        console.log(e.target.innerHTML);
-
+    function removeLabel(title) {
         let array = [...allLabels];
 
         const index = array.map((e) => e.title).indexOf(title);
-        console.log(index);
 
         if (index !== -1) {
             let element = { title: title, color: array[index].color };
@@ -80,7 +75,9 @@ function AddLabel({
                                     title={element.title}
                                     color={element.color}
                                     add={true}
-                                    onClick={removeLabel}
+                                    onClick={() => {
+                                        removeLabel(element.title);
+                                    }}
                                     key={element.title}
                                     allLabels={allLabels}
                                     setAllLabels={setAllLabels}
