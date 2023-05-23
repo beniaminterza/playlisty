@@ -127,4 +127,12 @@ module.exports = {
         },
     },
     plugins: [],
+    safelist: [
+        { pattern: "/bg-.*/", variations: ["group-hover", "hover", "focus"] },
+        { pattern: "/text-.*/", variations: ["group-hover", "hover", "focus"] },
+        {
+            pattern: "/border-.*/",
+            variations: ["group-hover", "hover", "focus"],
+        },
+    ],
 };
