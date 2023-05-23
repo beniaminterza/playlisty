@@ -24,10 +24,10 @@ function Label({
             className={`rounded-full w-max transition-all flex items-center ${
                 click !== false && "click"
             } text-sm border-2 border-transparent ${
-                select && `border-${color}`
-            } hover:border-${color} font-semibold w-max px-4 py-1.5 bg-${
+                select && `${"border-" + color}`
+            } ${"hover:border-" + color} font-semibold w-max px-4 py-1.5 bg-${
                 color + "Dark"
-            } text-${color} ${
+            } ${"text-" + color} ${
                 addLabel &&
                 "border-gray text-gray bg-transparent hover:border-white hover:text-white"
             }`}

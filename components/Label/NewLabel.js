@@ -68,9 +68,13 @@ function NewLabel({
                             setInput(e.target.value);
                         }}
                         placeholder="Label title"
-                        className={`focus:outline-none mt-2 rounded-full transition-all text-sm border-2 border-transparent hover:border-${color} focus:border-${color} font-semibold w-max px-4 py-1.5 bg-${
+                        className={`focus:outline-none mt-2 rounded-full transition-all text-sm border-2 border-transparent ${
+                            "hover:border-" + color
+                        } ${
+                            "focus:border-" + color
+                        } font-semibold w-max px-4 py-1.5 bg-${
                             color + "Dark"
-                        } text-${color}`}
+                        } ${"text-" + color}`}
                     />
 
                     <p className="mt-4 text-gray text-sm ">Color</p>
