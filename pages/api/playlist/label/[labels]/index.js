@@ -3,6 +3,10 @@ const { PrismaClient, Prisma } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 
+BigInt.prototype.toJSON = function () {
+    return this.toString();
+};
+
 export default async (req, res) => {
     if (req.method === "GET") {
         const session = await getSession({ req });
