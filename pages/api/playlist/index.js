@@ -2,7 +2,7 @@ import { getSession } from "next-auth/client";
 import set from "date-fns/set";
 const { PrismaClient } = require("@prisma/client");
 import axios from "axios";
-const apiKey = "AIzaSyChKUmhjzzj1vx3CSFX0RrO3PD985Bjvig";
+const apiKey = process.env.YT_KEY;
 const baseApiUrl = "https://www.googleapis.com/youtube/v3";
 const { parse, end, toSeconds, pattern } = require("iso8601-duration");
 
