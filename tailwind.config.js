@@ -1,9 +1,25 @@
 module.exports = {
     node: "jit",
-    purge: [
-        "./pages/**/*.{js,ts,jsx,tsx}",
-        "./components/**/*.{js,ts,jsx,tsx}",
-    ],
+    purge: {
+        content: [
+            "./pages/**/*.{js,ts,jsx,tsx}",
+            "./components/**/*.{js,ts,jsx,tsx}",
+        ],
+        safelist: [
+            {
+                pattern: "/bg-.*/",
+                variations: ["group-hover", "hover", "focus"],
+            },
+            {
+                pattern: "/text-.*/",
+                variations: ["group-hover", "hover", "focus"],
+            },
+            {
+                pattern: "/border-.*/",
+                variations: ["group-hover", "hover", "focus"],
+            },
+        ],
+    },
     darkMode: false, // or 'media' or 'class'
     theme: {
         extend: {
