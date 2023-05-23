@@ -25,12 +25,10 @@ export default async (req, res) => {
             } else {
                 //get the playlist data here
                 const { user_id } = hasSession;
-                const getVideos = await prisma.$queryRaw(
-                    `SELECT video.v, video.description, video.hasWatched, video.duration, video.title FROM playlist JOIN video ON video.playlistId = playlist.id WHERE playlist.userId = ${user_id} AND playlist.id = ${id}`
-                );
-                const getPlaylist = await prisma.$queryRaw(
-                    `SELECT playlist.title,(100 / playlist.duration) * SUM(video.timeWatched) AS 'progress', playlist.duration FROM playlist JOIN video ON video.playlistId = playlist.id WHERE playlist.userId = ${user_id} AND playlist.id = ${id}`
-                );
+                const getVideos =
+                    await prisma.$queryRaw`SELECT video.v, video.description, video.hasWatched, video.duration, video.title FROM playlist JOIN video ON video.playlistId = playlist.id WHERE playlist.userId = ${user_id} AND playlist.id = ${id}`;
+                const getPlaylist =
+                    await prisma.$queryRaw`SELECT playlist.title,(100 / playlist.duration) * SUM(video.timeWatched) AS 'progress', playlist.duration FROM playlist JOIN video ON video.playlistId = playlist.id WHERE playlist.userId = ${user_id} AND playlist.id = ${id}`;
                 res.status(200).json({
                     info: getPlaylist[0],
                     videos: getVideos,
@@ -64,7 +62,7 @@ export default async (req, res) => {
                         id: parseInt(id),
                     },
                     data: {
-                        labelplaylist: {
+                        labelPlaylist: {
                             create: [
                                 {
                                     label: {
@@ -108,9 +106,8 @@ export default async (req, res) => {
                 });
                 //error
             } else {
-                const deletePlaylist = await prisma.$queryRaw(
-                    `DELETE FROM playlist WHERE playlist.id = ${id}`
-                );
+                const deletePlaylist =
+                    await prisma.$queryRaw`DELETE FROM playlist WHERE playlist.id = ${id}`;
                 console.log(deletePlaylist);
                 res.status(200).json({
                     message: "Ok",

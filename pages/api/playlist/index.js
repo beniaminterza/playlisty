@@ -32,15 +32,12 @@ export default async (req, res) => {
             } else {
                 //get the playlist data here
                 const { user_id } = hasSession;
-                const getContinueWatching = await prisma.$queryRaw(
-                    `SELECT playlist.id, playlist.list, playlist.lastTimeWatched, playlist.title, ROUND((100 / playlist.duration) * SUM(video.timeWatched), 2) AS 'progress', video.v, COUNT(video.id) AS 'amount' FROM playlist JOIN video ON video.playlistId = playlist.id WHERE playlist.userId = ${user_id} AND playlist.lastTimeWatched IS NOT NULL GROUP BY playlist.id ORDER BY playlist.lastTimeWatched DESC LIMIT 6`
-                );
-                const getRecentylUploaded = await prisma.$queryRaw(
-                    `SELECT playlist.id, playlist.list, playlist.lastTimeWatched, playlist.title, ROUND((100 / playlist.duration) * SUM(video.timeWatched), 2) AS 'progress', video.v, COUNT(video.id) AS 'amount' FROM playlist JOIN video ON video.playlistId = playlist.id WHERE playlist.userId = ${user_id} GROUP BY playlist.id ORDER BY playlist.createdAt DESC LIMIT 6`
-                );
-                const getAll = await prisma.$queryRaw(
-                    `SELECT playlist.id, playlist.list, playlist.lastTimeWatched, playlist.title, ROUND((100 / playlist.duration) * SUM(video.timeWatched), 2) AS 'progress', video.v, COUNT(video.id) AS 'amount' FROM playlist JOIN video ON video.playlistId = playlist.id WHERE playlist.userId = ${user_id} GROUP BY playlist.id ORDER BY playlist.title`
-                );
+                const getContinueWatching =
+                    await prisma.$queryRaw`SELECT playlist.id, playlist.list, playlist.lastTimeWatched, playlist.title, ROUND((100 / playlist.duration) * SUM(video.timeWatched), 2) AS 'progress', video.v, COUNT(video.id) AS 'amount' FROM playlist JOIN video ON video.playlistId = playlist.id WHERE playlist.userId = ${user_id} AND playlist.lastTimeWatched IS NOT NULL GROUP BY playlist.id ORDER BY playlist.lastTimeWatched DESC LIMIT 6`;
+                const getRecentylUploaded =
+                    await prisma.$queryRaw`SELECT playlist.id, playlist.list, playlist.lastTimeWatched, playlist.title, ROUND((100 / playlist.duration) * SUM(video.timeWatched), 2) AS 'progress', video.v, COUNT(video.id) AS 'amount' FROM playlist JOIN video ON video.playlistId = playlist.id WHERE playlist.userId = ${user_id} GROUP BY playlist.id ORDER BY playlist.createdAt DESC LIMIT 6`;
+                const getAll =
+                    await prisma.$queryRaw`SELECT playlist.id, playlist.list, playlist.lastTimeWatched, playlist.title, ROUND((100 / playlist.duration) * SUM(video.timeWatched), 2) AS 'progress', video.v, COUNT(video.id) AS 'amount' FROM playlist JOIN video ON video.playlistId = playlist.id WHERE playlist.userId = ${user_id} GROUP BY playlist.id ORDER BY playlist.title`;
 
                 res.status(200).json({
                     continueWatching: getContinueWatching,
@@ -99,7 +96,7 @@ export default async (req, res) => {
                     users: {
                         connect: { id: parseInt(user_id) },
                     },
-                    labelplaylist: {
+                    labelPlaylist: {
                         create: [],
                     },
                 },

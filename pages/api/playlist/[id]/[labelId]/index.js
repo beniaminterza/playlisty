@@ -20,7 +20,7 @@ export default async (req, res) => {
                 });
                 //error
             } else {
-                const deleteRelation = await prisma.labelplaylist.delete({
+                const deleteRelation = await prisma.labelPlaylist.delete({
                     where: {
                         playlistId_labelId: {
                             playlistId: parseInt(id),

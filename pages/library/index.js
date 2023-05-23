@@ -6,6 +6,9 @@ import { getSession } from "next-auth/client";
 import VideoSection from "../../components/Video/VideoSection";
 import { PrismaClient } from "@prisma/client";
 import axios from "axios";
+BigInt.prototype.toJSON = function () {
+    return this.toString();
+};
 const contentPerPage = 12;
 
 function Index({ session, data, labels }) {
@@ -34,6 +37,7 @@ function Index({ session, data, labels }) {
                     cancelToken: new axios.CancelToken((c) => (cancel = c)),
                 })
                 .then((res) => {
+                    console.log(res.data);
                     setLabelPlaylists(res.data);
                     setLoadingLabel(false);
                 })
@@ -201,26 +205,26 @@ export async function getServerSideProps(context) {
             },
         });
         const { user_id } = hasSession;
-        const getContinueWatching = await prisma.$queryRaw(
-            `SELECT playlist.id, playlist.list, playlist.lastTimeWatched, playlist.title, (100 / playlist.duration) * SUM(CASE When video.hasWatched=1 Then video.duration Else video.timeWatched End) AS 'progress', video.v, COUNT(video.id) AS 'amount' FROM playlist JOIN video ON video.playlistId = playlist.id WHERE playlist.userId = ${user_id} AND playlist.lastTimeWatched IS NOT NULL GROUP BY playlist.id ORDER BY playlist.lastTimeWatched DESC LIMIT 16`
-        );
-        const getRecentylUploaded = await prisma.$queryRaw(
-            `SELECT playlist.id, playlist.list, playlist.lastTimeWatched, playlist.title, (100 / playlist.duration) * SUM(CASE When video.hasWatched=1 Then video.duration Else video.timeWatched End) AS 'progress', video.v, COUNT(video.id) AS 'amount' FROM playlist JOIN video ON video.playlistId = playlist.id WHERE playlist.userId = ${user_id} GROUP BY playlist.id ORDER BY playlist.createdAt DESC LIMIT 16`
-        );
-        const getAll = await prisma.$queryRaw(
-            `SELECT playlist.id, playlist.list, playlist.lastTimeWatched, playlist.title, (100 / playlist.duration) * SUM(CASE When video.hasWatched=1 Then video.duration Else video.timeWatched End) AS 'progress', video.v, COUNT(video.id) AS 'amount' FROM playlist JOIN video ON video.playlistId = playlist.id WHERE playlist.userId = ${user_id} GROUP BY playlist.id ORDER BY playlist.title LIMIT ${contentPerPage} OFFSET 0` //18
-        );
-        const getAllLabels = await prisma.$queryRaw(
-            `SELECT DISTINCT  label.title, label.color FROM label JOIN labelplaylist ON labelplaylist.labelId = label.title JOIN playlist ON playlist.id = labelplaylist.playlistId WHERE playlist.userId = ${user_id}`
-        );
+        const getContinueWatching =
+            await prisma.$queryRaw`SELECT playlist.id, playlist.list, playlist.lastTimeWatched, playlist.title, (100 / playlist.duration) * SUM(CASE When video.hasWatched=1 Then video.duration Else video.timeWatched End) AS 'progress', video.v, COUNT(video.id) AS 'amount' FROM playlist JOIN video ON video.playlistId = playlist.id WHERE playlist.userId = ${user_id} AND playlist.lastTimeWatched IS NOT NULL GROUP BY playlist.id ORDER BY playlist.lastTimeWatched DESC LIMIT 16`;
+        const getRecentylUploaded =
+            await prisma.$queryRaw`SELECT playlist.id, playlist.list, playlist.lastTimeWatched, playlist.title, (100 / playlist.duration) * SUM(CASE When video.hasWatched=1 Then video.duration Else video.timeWatched End) AS 'progress', video.v, COUNT(video.id) AS 'amount' FROM playlist JOIN video ON video.playlistId = playlist.id WHERE playlist.userId = ${user_id} GROUP BY playlist.id ORDER BY playlist.createdAt DESC LIMIT 16`;
+        const getAll =
+            await prisma.$queryRaw`SELECT playlist.id, playlist.list, playlist.lastTimeWatched, playlist.title, (100 / playlist.duration) * SUM(CASE When video.hasWatched=1 Then video.duration Else video.timeWatched End) AS 'progress', video.v, COUNT(video.id) AS 'amount' FROM playlist JOIN video ON video.playlistId = playlist.id WHERE playlist.userId = ${user_id} GROUP BY playlist.id ORDER BY playlist.title LIMIT ${contentPerPage} OFFSET 0`; //18;
+        const getAllLabels =
+            await prisma.$queryRaw`SELECT DISTINCT  label.title, label.color FROM label JOIN labelPlaylist ON labelPlaylist.labelId = label.title JOIN playlist ON playlist.id = labelPlaylist.playlistId WHERE playlist.userId = ${user_id}`;
 
         return {
             props: {
                 session: session,
                 data: {
-                    continueWatching: getContinueWatching,
-                    recentlyUploaded: getRecentylUploaded,
-                    all: getAll,
+                    continueWatching: JSON.parse(
+                        JSON.stringify(getContinueWatching)
+                    ),
+                    recentlyUploaded: JSON.parse(
+                        JSON.stringify(getRecentylUploaded)
+                    ),
+                    all: JSON.parse(JSON.stringify(getAll)),
                 },
                 labels: getAllLabels,
             },

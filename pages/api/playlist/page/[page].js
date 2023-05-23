@@ -20,11 +20,10 @@ export default async (req, res) => {
                 //error
             } else {
                 const { user_id } = hasSession;
-                const getAll = await prisma.$queryRaw(
-                    `SELECT playlist.id, playlist.list, playlist.lastTimeWatched, playlist.title, ROUND((100 / playlist.duration) * SUM(video.timeWatched), 2) AS 'progress', video.v, COUNT(video.id) AS 'amount' FROM playlist JOIN video ON video.playlistId = playlist.id WHERE playlist.userId = ${user_id} GROUP BY playlist.id ORDER BY playlist.title LIMIT 6 OFFSET ${
+                const getAll =
+                    await prisma.$queryRaw`SELECT playlist.id, playlist.list, playlist.lastTimeWatched, playlist.title, ROUND((100 / playlist.duration) * SUM(video.timeWatched), 2) AS 'progress', video.v, COUNT(video.id) AS 'amount' FROM playlist JOIN video ON video.playlistId = playlist.id WHERE playlist.userId = ${user_id} GROUP BY playlist.id ORDER BY playlist.title LIMIT 6 OFFSET ${
                         page * elementPerPage
-                    }`
-                );
+                    }`;
 
                 res.status(200).json(getAll);
                 return;

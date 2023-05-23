@@ -436,18 +436,14 @@ export async function getServerSideProps(context) {
             },
         });
         const { user_id } = hasSession;
-        const getVideos = await prisma.$queryRaw(
-            `SELECT video.v, video.id, video.timeWatched, video.note, video.description, video.hasWatched, video.duration, video.title FROM playlist JOIN video ON video.playlistId = playlist.id WHERE playlist.userId = ${user_id} AND playlist.id = ${playlistId}`
-        );
-        const getPlaylist = await prisma.$queryRaw(
-            `SELECT playlist.title, playlist.duration FROM playlist JOIN video ON video.playlistId = playlist.id WHERE playlist.userId = ${user_id} AND playlist.id = ${playlistId}`
-        );
-        let getAllLabels = await prisma.$queryRaw(
-            `SELECT DISTINCT playlist.id, label.title, label.color FROM label JOIN labelplaylist ON labelplaylist.labelId = label.title JOIN playlist ON playlist.id = labelplaylist.playlistId WHERE playlist.userId = ${user_id} AND playlist.id != ${playlistId} GROUP BY label.title`
-        );
-        const getPlaylistLabels = await prisma.$queryRaw(
-            `SELECT playlist.id, label.title, label.color FROM label JOIN labelplaylist ON labelplaylist.labelId = label.title JOIN playlist ON playlist.id = labelplaylist.playlistId WHERE playlist.userId = ${user_id} AND playlist.id = ${playlistId}`
-        );
+        const getVideos =
+            await prisma.$queryRaw`SELECT video.v, video.id, video.timeWatched, video.note, video.description, video.hasWatched, video.duration, video.title FROM playlist JOIN video ON video.playlistId = playlist.id WHERE playlist.userId = ${user_id} AND playlist.id = ${playlistId}`;
+        const getPlaylist =
+            await prisma.$queryRaw`SELECT playlist.title, playlist.duration FROM playlist JOIN video ON video.playlistId = playlist.id WHERE playlist.userId = ${user_id} AND playlist.id = ${playlistId}`;
+        let getAllLabels =
+            await prisma.$queryRaw`SELECT DISTINCT playlist.id, label.title, label.color FROM label JOIN labelPlaylist ON labelPlaylist.labelId = label.title JOIN playlist ON playlist.id = labelPlaylist.playlistId WHERE playlist.userId = ${user_id} AND playlist.id != ${playlistId} GROUP BY label.title`;
+        const getPlaylistLabels =
+            await prisma.$queryRaw`SELECT playlist.id, label.title, label.color FROM label JOIN labelPlaylist ON labelPlaylist.labelId = label.title JOIN playlist ON playlist.id = labelPlaylist.playlistId WHERE playlist.userId = ${user_id} AND playlist.id = ${playlistId}`;
         let newArray = [];
         for (let i = 0; i < getAllLabels.length; i++) {
             if (

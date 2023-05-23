@@ -9,7 +9,7 @@ datasource db {
 
 model accounts {
   id                   Int      @id @default(autoincrement())
-  compound_id          String   @unique @db.VarChar(255)
+  compound_id          String   @unique(map: "compound_id") @db.VarChar(255)
   user_id              Int
   provider_type        String   @db.VarChar(255)
   provider_id          String   @db.VarChar(255)
@@ -20,25 +20,15 @@ model accounts {
   created_at           DateTime @default(now()) @db.Timestamp(6)
   updated_at           DateTime @default(now()) @db.Timestamp(6)
 
-  @@index([provider_account_id], name: "provider_account_id")
-  @@index([provider_id], name: "provider_id")
-  @@index([user_id], name: "user_id")
+  @@index([provider_account_id], map: "provider_account_id")
+  @@index([provider_id], map: "provider_id")
+  @@index([user_id], map: "user_id")
 }
 
 model label {
   title         String          @id @db.VarChar(16)
   color         String          @db.VarChar(16)
-  labelplaylist labelplaylist[]
-}
-
-model labelplaylist {
-  playlistId Int
-  labelId    String   @db.VarChar(16)
-  label      label    @relation(fields: [labelId], references: [title])
-  playlist   playlist @relation(fields: [playlistId], references: [id])
-
-  @@id([playlistId, labelId])
-  @@index([labelId], name: "labelId")
+  labelPlaylist labelPlaylist[]
 }
 
 model playlist {
@@ -49,19 +39,19 @@ model playlist {
   lastTimeWatched DateTime?       @db.DateTime(0)
   createdAt       DateTime?       @default(now()) @db.DateTime(0)
   title           String          @db.VarChar(100)
-  users           users           @relation(fields: [userId], references: [id])
-  labelplaylist   labelplaylist[]
+  labelPlaylist   labelPlaylist[]
+  users           users           @relation(fields: [userId], references: [id], onDelete: Cascade, map: "playlist_ibfk_1")
   video           video[]
 
-  @@index([userId], name: "userId")
+  @@index([userId], map: "userId")
 }
 
 model sessions {
   id            Int      @id @default(autoincrement())
   user_id       Int
   expires       DateTime @default(now()) @db.Timestamp(6)
-  session_token String   @unique @db.VarChar(255)
-  access_token  String   @unique @db.VarChar(255)
+  session_token String   @unique(map: "session_token") @db.VarChar(255)
+  access_token  String   @unique(map: "access_token") @db.VarChar(255)
   created_at    DateTime @default(now()) @db.Timestamp(6)
   updated_at    DateTime @default(now()) @db.Timestamp(6)
 }
@@ -69,7 +59,7 @@ model sessions {
 model users {
   id             Int        @id @default(autoincrement())
   NAME           String?    @db.VarChar(255)
-  email          String?    @unique @db.VarChar(255)
+  email          String?    @unique(map: "email") @db.VarChar(255)
   email_verified DateTime   @default(now()) @db.Timestamp(6)
   image          String?    @db.VarChar(255)
   created_at     DateTime   @default(now()) @db.Timestamp(6)
@@ -80,7 +70,7 @@ model users {
 model verification_requests {
   id         Int      @id @default(autoincrement())
   identifier String   @db.VarChar(255)
-  token      String   @unique @db.VarChar(255)
+  token      String   @unique(map: "token") @db.VarChar(255)
   expires    DateTime @default(now()) @db.Timestamp(6)
   created_at DateTime @default(now()) @db.Timestamp(6)
   updated_at DateTime @default(now()) @db.Timestamp(6)
@@ -96,8 +86,18 @@ model video {
   title       String   @db.VarChar(100)
   description String   @db.VarChar(5000)
   createdAt   DateTime @db.Date
-  note        String?  @db.VarChar(2000)
-  playlist    playlist @relation(fields: [playlistId], references: [id])
+  note        String?  @db.VarChar(5000)
+  playlist    playlist @relation(fields: [playlistId], references: [id], onDelete: Cascade, map: "video_ibfk_1")
 
-  @@index([playlistId], name: "playlistId")
+  @@index([playlistId], map: "playlistId")
+}
+
+model labelPlaylist {
+  playlistId Int
+  labelId    String   @db.VarChar(16)
+  playlist   playlist @relation(fields: [playlistId], references: [id], onDelete: Cascade, map: "labelPlaylist_ibfk_1")
+  label      label    @relation(fields: [labelId], references: [title], onDelete: Cascade, map: "labelPlaylist_ibfk_2")
+
+  @@id([playlistId, labelId])
+  @@index([labelId], map: "labelId")
 }
