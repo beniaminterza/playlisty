@@ -26,8 +26,8 @@ export default async (req, res) => {
                 //get the playlist data here
                 const { user_id } = hasSession;
 
-                const getPlaylists =
-                    await prisma.$queryRaw`SELECT playlist.id, playlist.list, playlist.lastTimeWatched, playlist.title, ROUND((100 / playlist.duration) * SUM(video.timeWatched), 2) AS 'progress', video.v, COUNT(video.id) AS 'amount' FROM playlist JOIN video ON video.playlistId = playlist.id WHERE playlist.userId = ${user_id} AND LOWER(playlist.title) LIKE LOWER('%${searchString}%') GROUP BY playlist.id `;
+                const query = `SELECT playlist.id, playlist.list, playlist.lastTimeWatched, playlist.title, ROUND((100 / playlist.duration) * SUM(video.timeWatched), 2) AS 'progress', video.v, COUNT(video.id) AS 'amount' FROM playlist JOIN video ON video.playlistId = playlist.id WHERE playlist.userId = ${user_id} AND LOWER(playlist.title) LIKE LOWER('%${searchString}%') GROUP BY playlist.id`;
+                const getPlaylists = await prisma.$queryRawUnsafe(query);
 
                 res.status(200).json(getPlaylists);
                 return;
