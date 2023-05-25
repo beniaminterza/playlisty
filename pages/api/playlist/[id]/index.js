@@ -4,6 +4,10 @@ const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 
+BigInt.prototype.toJSON = function () {
+    return this.toString();
+};
+
 /*
  */
 
