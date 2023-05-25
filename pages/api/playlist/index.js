@@ -14,6 +14,9 @@ Body requirement:
         playlistId:String(after list in the url)
     }
 */
+BigInt.prototype.toJSON = function () {
+    return this.toString();
+};
 
 export default async (req, res) => {
     if (req.method === "GET") {
